@@ -1,4 +1,5 @@
-classdef (Abstract) Base < handle
+
+classdef (Abstract) Dataset < handle
     
     % Constants ...
     properties (GetAccess=public, SetAccess=protected)
