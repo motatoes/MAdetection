@@ -5,6 +5,10 @@ function th = tophatVesselRemoval(img, varargin)
     end
 
     p = inputParser();
+    % We only need to specify a degree range from 0 to 180 degrees since
+    % the line strel is symmetrical. Note however, that the `strel`
+    % function does not seem to produce symmetrical results. More info here
+    % http://stackoverflow.com/q/41442596/1765562
     addParameter(p, 'degreeRange', 0:15:180);
     addParameter(p, 'tophatStrelSize', 15);
     parse(p, varargin{:});
