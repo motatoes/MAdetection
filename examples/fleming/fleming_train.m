@@ -1,3 +1,5 @@
+addpath ../;
+
 dataset = 'messidor';
 
 if (strcmp(dataset, 'messidor'))

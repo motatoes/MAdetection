@@ -1,3 +1,4 @@
+addpath ../;
 
 dataset = 'messidor'; % {messidor, diaretdb}
 
