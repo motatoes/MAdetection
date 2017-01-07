@@ -1,4 +1,4 @@
-function [classifications] = KNNClassify( training_features, test_features, varargin)
+function [classifications, scores] = KNNClassify( training_features, test_features, varargin)
     % KNN_CLASSIFICATION performs KNN classification for a k interval and
     % returns the classifications as a result
     % Performs KNN clasification performs knn classification using a set of
@@ -44,9 +44,10 @@ function [classifications] = KNNClassify( training_features, test_features, vara
     end
     
     classifications = zeros(size(test_features,1), 1);
+    scores = zeros(size(test_features, 1), 1);
 
     [IDX, D] = knnsearch(training_features(:, 1:end-1), test_features, 'K', kvalue, 'Distance', distance);
-
+    
     % Finding the minimum distance
     for id=1:size(IDX, 1)
         indeces = IDX(id,:);
@@ -59,6 +60,8 @@ function [classifications] = KNNClassify( training_features, test_features, vara
         else
             classifications(id) = false;
         end
+        
+        scores(id) = positiveCount/kvalue;
     end
 
 end
