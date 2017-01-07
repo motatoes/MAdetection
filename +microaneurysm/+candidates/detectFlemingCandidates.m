@@ -19,7 +19,7 @@ function [candidates, intermediateResults] = detectFlemingCandidates(inputImage,
     gaussSigma = p.Results.gaussSigma;
     gaussWindowSize = p.Results.gaussWindowSize;
     tophatStrelSize = p.Results.tophatStrelSize;
-    thresholdPercentagePi5xels = p.Results.thresholdPercentagePixels;
+    thresholdPercentagePixels = p.Results.thresholdPercentagePixels;
     exclusionMask = p.Results.ExclusionMask;
     gaussZeroMean = p.Results.gaussZeroMean;
 
