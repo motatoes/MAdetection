@@ -33,7 +33,8 @@ classdef Candidates < handle
         function filteredCandidates = filter(self, filterVector)
             import microaneurysm.candidates.Candidates
             
-            filteredCellArray = self.getCellArray(filterVector);
+            filteredCellArray = self.getCellArray();
+            filteredCellArray = filteredCellArray( logical(filterVector) );
             filteredCandidates = Candidates();
             filteredCandidates.setFromCellArray(filteredCellArray, size(self.getBinaryImage) );
             

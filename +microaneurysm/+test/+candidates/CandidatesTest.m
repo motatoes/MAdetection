@@ -84,13 +84,25 @@ classdef CandidatesTest < matlab.unittest.TestCase
            binaryimg(1) = 1;
            binaryimg(3) = 1;
            c = Candidates();
-           c.setFromBinaryImage( binaryimg );           
+           c.setFromBinaryImage( binaryimg );
            groundtruth = binaryimg;
            labels = labelCandidates(c, groundtruth);
            
            testCase.verifyEqual(labels, [1; 1]);
            
         end
+        
+        function testCandidatesFilterFunction( testCase )
+            import microaneurysm.candidates.Candidates
+            
+            ca = {[5], [9, 10], [22]};
+            c = Candidates();
+            c.setFromCellArray(ca, [50,50]);
+            c = c.filter([1 0 1]);
+            testCase.verifyEqual(numel(c.getCellArray()), 2); 
+            
+        end
+        
     end
     
 end
