@@ -1,10 +1,10 @@
-function [ features ] = shapeFeatures( inputImage, candidates )
+function [ features ] = shapeFeatures( candidates )
 %CALCULATEPIXELFEATURES Summary of this function goes here
 %   Detailed explanation goes here
     
     rgPixels = candidates.getCellArray();
     
-    tmp = zeros(size(inputImage));
+    tmp = zeros(size(candidates.getBinaryImage()));
     
     majorAxisLengths = zeros(length(rgPixels), 1);
     minorAxisLengths = zeros(length(rgPixels), 1);
@@ -42,7 +42,7 @@ function [ features ] = shapeFeatures( inputImage, candidates )
         compactnesses(i) = sqrt(mean(distances));
         
         % Reset the values of tmp for the next iteration
-        tmp = zeros(size(candidates.preprocessedImage));
+        tmp = zeros(size(candidates.getBinaryImage()));
     end
     
     % Adding one in the denominator to avoid infinite values
