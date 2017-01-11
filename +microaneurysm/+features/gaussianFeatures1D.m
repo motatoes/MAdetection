@@ -13,7 +13,7 @@ function [ features ] = gaussianFeatures1D( inputImage, candidates, varargin )
     
     p = inputParser();
     addParameter(p, 'sigma', 1.0);
-    addParameter(p, 'thetaValues', 0:10:90);
+    addParameter(p, 'thetaValues', 0:10:180);
     addParameter(p, 'windowSize', [15 15]);
     parse(p, varargin{:});
     
