@@ -20,6 +20,10 @@ function [ features ] = intensityFeatures(  inputChannel, candidates )
     
     channelContrasts = zeros(length(rgpixels), 1);
     
+    
+    candidatesBin = candidates.getBinaryImage();
+    candidatesBinDilated = imdilate(candidatesBin, strel('disk', 3));
+    
     for r=1:length(rgpixels)
         
         % == feature extraction == %
@@ -30,16 +34,16 @@ function [ features ] = intensityFeatures(  inputChannel, candidates )
         Channelmeans(r) = mean(inputChannel(rgpixels{r}));
         
         % Standard deviations
-        channelStd(r) = std(inputChannel(rgpixels{r}));
+        channelStd(r) = std( double(inputChannel(rgpixels{r})) );
         
         % max - min intensity value
         channelRange(r) = max(inputChannel(rgpixels{r})) - min(inputChannel(rgpixels{r}));
         
         % MA contrast
         % Reset the values of the binary image
-        tmp(:,:) = 0;
-        tmp(rgpixels{r}) = 1;
-        tmpDilated = imdilate(tmp, strel('disk', 3));
+        tmp = false(size(candidatesBin));
+        tmp(rgpixels{r}) = true;
+        tmpDilated = imreconstruct(tmp, candidatesBinDilated);
         tmpDilated = tmpDilated - tmp; % Extracting the boundaries only
         dilatedBoundPixels = find(tmpDilated);
         channelContrasts(r) = Channelmeans(r) - mean(inputChannel(dilatedBoundPixels));
