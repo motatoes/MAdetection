@@ -21,7 +21,6 @@ function [features, intermediateResults] = flemingIntensityFeatures( preprocesse
         energies(i) = microaneurysm.util.calculate_energy(region, preprocessedImage, 'gradient2' , grad.^2);
     end
     
-    
     zmeans = cellfun(@(x) mean(preprocessedImage(x)), boundaryPixels);
     zmeans_cell = mat2cell(zmeans, size(zmeans,1), ones(size(zmeans,2), 1) );
     depths = cellfun(@(p, zmean) p.getDepth(zmean), paraboloidParams, zmeans_cell);
@@ -31,7 +30,6 @@ function [features, intermediateResults] = flemingIntensityFeatures( preprocesse
     intermediateResults.depths = depths;
     intermediateResults.a_minors = a_minors;
     intermediateResults.a_majors = a_majors;
-    
     
     % == Canculting feautures == %
     features_fint_local = zeros(length(rgpixels), 4);
@@ -49,7 +47,6 @@ function [features, intermediateResults] = flemingIntensityFeatures( preprocesse
     features_fint_local(:,4) = features_fint_local(:,2) ./ sqrt(features_fint_local(:,1));
 
     features = features_fint_local;
-    
     
 %     upluses = paraboloidParams.get_upluses();
 %     uminuses = paraboloidParams.get_uminuses();
@@ -83,7 +80,4 @@ function [features, intermediateResults] = flemingIntensityFeatures( preprocesse
 %             is_suitable(i) = false;
 %         end
 %     end
-    
-    
-
 end

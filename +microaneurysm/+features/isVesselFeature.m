@@ -1,8 +1,10 @@
-function [isVesselFeature] = isVesselFeature(inputImage, paraboloid, candidates, is_suitable, vesselMask, varargin)
+function [isVesselFeature] = isVesselFeature(inputImage, paraboloidParams, candidates, vesselMask, varargin)
     % This method calculates the additional feature column
     % isVessel which determines whether or not a candidate
     % appears to lie within a vessel branching point or within a
     % vessel. The isVessel feature was documented in (Fleming, 2006)
+    import microaneurysm.candidates.candidatesToBoundaryPixels;
+    import microaneurysm.features.isVesselFeature;
     
     p = inputParser();
     addParameter(p, 'subImageWidth', 81);
@@ -15,18 +17,33 @@ function [isVesselFeature] = isVesselFeature(inputImage, paraboloid, candidates,
     subImageHeight = p.Results.subImageHeight;
     alpha = p.Results.alpha;
     
-    rgpixels = candidates.regionGrownPixels;
-    rgBoundaryPixels = candidates.get_boundaryPixels();
+    rgpixels = candidates.getCellArray();
+    rgBoundaryPixels = candidatesToBoundaryPixels(candidates);
+    % .get_boundaryPixels();
     
-    preproImg = inputImage.preprocessedImage;
+    zmeans = cellfun(@(x) mean(inputImage(x)), rgBoundaryPixels);
+    zmeans_cell = mat2cell(zmeans, size(zmeans,1), ones(size(zmeans,2),1) );
+    [upluses, uminuses] = cellfun(@(p) p.getUPlusMinus(), paraboloidParams);
+    upluses_cell = mat2cell(upluses, size(upluses,1), ones(size(upluses,2),1) );
+    uminuses_cell = mat2cell(uminuses, size(uminuses,1), ones(size(uminuses, 2),1) );
+    depths_fn = @(p, zmean, uplus, uminus) p.getDepth(zmean);
+    depths = cellfun(depths_fn, paraboloidParams, zmeans_cell);
+    axes_fn = @(p, zmean, uplus, uminus) p.getMajorMinorAxis(zmean, 'uplus', uplus, 'uminus', uminus);
+    [a_minors, a_majors] = cellfun(axes_fn, paraboloidParams, zmeans_cell, upluses_cell, uminuses_cell);
+    
+        
+    
+    
+    preproImg = inputImage;
 
-    upluses = paraboloid.get_upluses();
-    zmeans = paraboloid.get_zmeans(rgBoundaryPixels);
-    a_minors = paraboloid.get_aminoraxes('zmeans', zmeans, 'upluses', upluses);
+%     [upluses, ~] = paraboloid.getUPlusMinus();
+%     zmeans = paraboloid.getZ(rgBoundaryPixels);
 
+    
+    
     % We initialize the isVesselFeature with the main classification which 
     % we get from the '_loose' function 
-    isVesselFeature = microaneurysm.features.isVesselLooseFeature(inputImage, candidates, is_suitable, vesselMask);
+    isVesselFeature = microaneurysm.features.isVesselLooseFeature(inputImage, candidates, vesselMask);
     
     % For each region grown candidate ...
     for i=1:length(rgpixels)
@@ -34,7 +51,7 @@ function [isVesselFeature] = isVesselFeature(inputImage, paraboloid, candidates,
         % If its not a suitable candidate we don't care about it
         % anyways ..
         % Or if the vessel feature from the '_loose' classification
-        if (is_suitable(i) == 0 || isVesselFeature(i) == 0)
+        if (isVesselFeature(i) == 0)
             continue;
         end
 
@@ -46,7 +63,7 @@ function [isVesselFeature] = isVesselFeature(inputImage, paraboloid, candidates,
         q = minloc;
 
         [qr, qc] = ind2sub( size(preproImg), q);
-        [S_sub, minRow_sub, maxRow_sub, minCol_sub, maxCol_sub] = helpers.imcropCenter(preproImg, [qr, qc], [subImageWidth, subImageHeight]);
+        [S_sub, minRow_sub, maxRow_sub, minCol_sub, maxCol_sub] = microaneurysm.util.imcropCenter(preproImg, [qr, qc], [subImageWidth, subImageHeight]);
         vesselMask_sub = vesselMask(minRow_sub:maxRow_sub, minCol_sub:maxCol_sub);
         tmp = false(size(preproImg));
         tmp(rgpixels{i}) = 1;

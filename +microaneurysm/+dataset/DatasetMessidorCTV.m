@@ -1,13 +1,12 @@
-classdef DatasetMessidorCTV < microaneurysm.settings.DatasetMessidor
+classdef DatasetMessidorCTV <  microaneurysm.dataset.DatasetMessidor
     
     methods
         function obj = DatasetMessidorCTV(varargin)
             % Call the parent constructor
-            obj = obj@microaneurysm.settings.DatasetMessidor(varargin{:});            
+            obj = obj@ microaneurysm.dataset.DatasetMessidor(varargin{:});            
         end
         
         function v = groundImage_count(self, imgName, varargin)
-
             absPath = self.GTImageAbsName(imgName);
             [resimg, respixels] = imannotate.util.markers2image(absPath, 'tagsFilter', struct('microaneurysm', {{'close_to_vessel'}}), varargin{:});
             v = length(respixels.microaneurysm);

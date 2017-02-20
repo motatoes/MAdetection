@@ -1,9 +1,9 @@
-classdef DatasetMessidorSubtle < microaneurysm.settings.DatasetMessidor
+classdef DatasetMessidorSubtle < microaneurysm.dataset.DatasetMessidor
     
     methods
         function obj = DatasetMessidorSubtle(varargin)
             % Call the parent constructor
-            obj = obj@microaneurysm.settings.DatasetMessidor(varargin{:});            
+            obj = obj@microaneurysm.dataset.DatasetMessidor(varargin{:});
         end
         
         function v = groundImage_count(self, imgName, varargin)
@@ -15,7 +15,7 @@ classdef DatasetMessidorSubtle < microaneurysm.settings.DatasetMessidor
         
         function img = getGTImage(self, imgName, varargin)
             img = self.absPath2image(self.GTImageAbsName(imgName), self.GroundType, ...
-                'markerOptions', {'tagsFilter', struct('microaneurysm', {{'obvious'}})}, varargin{:});
+                'markerOptions', {'tagsFilter', struct('microaneurysm', {{'subtle'}})}, varargin{:});
         end
     end
     

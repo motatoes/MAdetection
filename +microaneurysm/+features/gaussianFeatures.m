@@ -16,7 +16,7 @@ function [features] = gaussianFeatures( inputImage, candidates, varargin )
     import microaneurysm.candidates.candidatesToSeedLocations
     
     p = inputParser();
-    addParameter(p, 'sigmaValues', 1.0);
+    addParameter(p, 'sigmaValues', [1]);
     addParameter(p, 'windowSize', [15 15]);
     parse(p, varargin{:});
     

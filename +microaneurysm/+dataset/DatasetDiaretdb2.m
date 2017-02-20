@@ -1,4 +1,4 @@
-classdef DatasetDiaretdb2 < microaneurysm.settings.Dataset
+classdef DatasetDiaretdb2 < microaneurysm.dataset.Dataset
     properties
     end
     
@@ -6,7 +6,7 @@ classdef DatasetDiaretdb2 < microaneurysm.settings.Dataset
         function obj = DatasetDiaretdb2(varargin)
             
             % Call the parent constructor
-            obj = obj@microaneurysm.settings.Dataset(varargin{:});
+            obj = obj@microaneurysm.dataset.Dataset(varargin{:});
             
             obj.BasePath = strcat(obj.BasePath, '/DIARETDB/v2.1/ddb1_v02_01/');
 

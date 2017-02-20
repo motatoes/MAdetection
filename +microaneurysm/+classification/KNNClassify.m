@@ -37,12 +37,12 @@ function [classifications, scores] = KNNClassify( training_features, test_featur
     % Normalizing the columns before classification because knn search
     % screws up when we use 'seucledian' distance and there are zero
     % columns in the training or the test features
-    if (strcmp(distance, 'neuclidean'))
-        training_features(:, 1:end-1) = normc(training_features(:, 1:end-1));
-        test_features = normc(test_features);
+    if (strcmp(distance, 'seuclidean'))
+        training_features(:, 1:end-1) = zscore(training_features(:, 1:end-1));
+        test_features = zscore(test_features);
         distance = 'euclidean';
     end
-    
+%     
     classifications = zeros(size(test_features,1), 1);
     scores = zeros(size(test_features, 1), 1);
 

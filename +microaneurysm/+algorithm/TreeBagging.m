@@ -148,6 +148,8 @@ classdef TreeBagging < microaneurysm.algorithm.Base
             features_moments = momentFeatures( RGcandidates );
             features_shape = shapeFeatures( RGcandidates );
             features_gauss = gaussianFeatures( tophatImage , RGcandidates );
+            %%%%%%%%%%%%
+            %features_gauss = [features_gauss(:,1), features_gauss(:,5:6)];
             features_gauss1D = gaussianFeatures1D( tophatImage, RGcandidates);
             features_intensity_R = intensityFeatures( colourImage(:,:,1), RGcandidates );
             features_intensity_G = intensityFeatures( colourImage(:,:,2), RGcandidates );

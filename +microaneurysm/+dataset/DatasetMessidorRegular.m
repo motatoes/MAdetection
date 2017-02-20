@@ -1,9 +1,9 @@
-classdef DatasetMessidorRegular < microaneurysm.settings.DatasetMessidor
+classdef DatasetMessidorRegular <  microaneurysm.dataset.DatasetMessidor
     
     methods
         function obj = DatasetMessidorRegular(varargin)
             % Call the parent constructor
-            obj = obj@microaneurysm.settings.DatasetMessidor(varargin{:});
+            obj = obj@ microaneurysm.dataset.DatasetMessidor(varargin{:});
         end
     
         function v = groundImage_count(self, imgName, varargin)
