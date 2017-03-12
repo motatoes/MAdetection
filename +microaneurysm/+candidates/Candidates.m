@@ -47,6 +47,10 @@ classdef Candidates < handle
             end
         end
         
+        function imshow(self)
+           imshow(self.getBinaryImage) 
+        end
+        
     end
     
 end
