@@ -51,6 +51,13 @@ classdef Candidates < handle
            imshow(self.getBinaryImage) 
         end
         
+        function s = size(self)
+           s = size(self.getCellArray());
+        end
+        
+        function l = length(self)
+           l = length(self.getCellArray());
+        end
     end
     
 end
