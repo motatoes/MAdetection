@@ -53,6 +53,14 @@ classdef DatasetMessidor < microaneurysm.dataset.Dataset
             v = length(respixels.microaneurysm);
         end
         
+        function GTcandidates = getGTcandidates(self, imgName, varargin)
+           [GTimage, GTstruct] = self.absPath2image(self.GTImageAbsName(imgName), self.GroundType, varargin{:}); 
+           GTcellArray = GTstruct.microaneurysm;
+           GTcandidates = microaneurysm.candidates.Candidates();
+           GTcandidates.setFromCellArray( GTcellArray, size(GTimage) );
+        end
+        
+        
 %         function img = getGTImage(self, imgName, varargin)
 %             img = self.absPath2image(self.GTImageAbsName(imgName), self.GroundType, ...
 %                 'markerOptions', {'tagsFilter', struct('microaneurysm', {{}})}, varargin{:});

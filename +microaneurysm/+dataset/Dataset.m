@@ -104,6 +104,12 @@ classdef (Abstract) Dataset < handle
             img = self.absPath2image(self.GTImageAbsName(imgName), self.GroundType, varargin{:});
         end
         
+        function GTcandidates = getGTcandidates(self, imgName, varargin)
+           GTimage = self.getGTImage( imgName, varargin{:} ); 
+           GTcandidates = microaneurysm.candidates.Candidates();
+           GTcandidates.setFromBinaryImage(GTimage);
+        end
+        
         function img = getODImage(self, imgName, varargin)
             img = self.absPath2image(self.ODImageAbsName(imgName), self.ODType, varargin{:});
         end
