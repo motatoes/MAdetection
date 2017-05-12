@@ -101,7 +101,7 @@ classdef (Abstract) Dataset < handle
         end
         
         function img = getGTImage(self, imgName, varargin)
-            img = self.absPath2image(self.GTImageAbsName(imgName), self.GroundType, varargin{:});
+            img = self.absPath2image(self.GTImageAbsName(imgName), self.GroundType, varargin{:}) > 0;
         end
         
         function GTcandidates = getGTcandidates(self, imgName, varargin)
