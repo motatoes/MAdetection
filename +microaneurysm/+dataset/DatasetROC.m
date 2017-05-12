@@ -1,4 +1,4 @@
-classdef DatasetROC < microaneurysm.settings.Dataset
+classdef DatasetROC < microaneurysm.dataset.Dataset
     properties
     end
     
@@ -6,7 +6,7 @@ classdef DatasetROC < microaneurysm.settings.Dataset
         function obj = DatasetROC(varargin)
             
             % Call the parent constructor
-            obj = obj@microaneurysm.settings.Dataset(varargin{:});
+            obj = obj@microaneurysm.dataset.Dataset(varargin{:});
             
             
             obj.BasePath = strcat(obj.BasePath, '/RetinopathyOnlineChallenge/ROCtraining/');
