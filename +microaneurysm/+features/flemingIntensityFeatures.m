@@ -17,7 +17,7 @@ function [features, intermediateResults] = flemingIntensityFeatures( preprocesse
     energies = zeros(size(rgpixels));
     grad = microaneurysm.util.calculate_gradient(preprocessedImage);
     for i=1:length(rgpixels)
-        region = ria.util.cell2mask({rgpixels{i}}, size(candidates.getBinaryImage));
+        region = microaneurysm.util.cell2mask({rgpixels{i}}, size(candidates.getBinaryImage));
         energies(i) = microaneurysm.util.calculate_energy(region, preprocessedImage, 'gradient2' , grad.^2);
     end
     

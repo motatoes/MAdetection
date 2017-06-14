@@ -14,12 +14,12 @@ classdef Candidates < handle
         
         function setFromBinaryImage(self, binaryImage, varargin)
             self.binaryImage = binaryImage;
-            self.cellArray = ria.util.mask2cell(binaryImage);
+            self.cellArray = microaneurysm.util.mask2cell(binaryImage);
         end
         
         function setFromCellArray(self, cellArray, imageSize, varargin)
             self.cellArray = cellArray;
-            self.binaryImage = ria.util.cell2mask(cellArray, imageSize);
+            self.binaryImage = microaneurysm.util.cell2mask(cellArray, imageSize);
         end
         
         function binaryImg = getBinaryImage(self, varargin)
